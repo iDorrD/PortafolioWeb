@@ -1,0 +1,544 @@
+<!-- ======================================== -->
+<!-- Desarrollado por Cristian López Kostiouk -->
+<!-- ======================================== -->
+
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cristian López Kostiouk | Desarrollador Web Junior</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        dark: '#0a0a0a',
+                        card: '#171717',
+                        accent: '#3b82f6'
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #0a0a0a;
+            color: #e5e5e5;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .bg-noise {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0a0a0a;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        .glass-nav {
+            background: rgba(10, 10, 10, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .project-card:hover .card-overlay {
+            opacity: 1;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .disabled {
+            pointer-events: none;
+            opacity: 0.5;
+        }
+        
+        /* Estilos para el dropdown de idioma */
+        .lang-dropdown {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.2s ease-in-out;
+        }
+        
+        .group:hover .lang-dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+
+<body class="antialiased selection:bg-blue-500 selection:text-white">
+
+    <div class="bg-noise"></div>
+
+    <nav class="fixed w-full top-0 z-50 glass-nav transition-all duration-300" id="navbar">
+        <div class="max-w-5xl mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-xl font-bold tracking-tight hover:text-white transition-colors z-50">
+                Cristian López Kostiouk<span class="text-blue-500">.</span>
+            </a>
+
+            <!-- Contenedor Derecho: Menú Desktop + Selector Idioma + Hamburger -->
+            <div class="flex items-center gap-6">
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8 text-sm font-medium text-gray-400">
+                    <a href="#inicio" class="hover:text-white transition-colors" data-i18n="nav_home">Inicio</a>
+                    <a href="#proyectos" class="hover:text-white transition-colors" data-i18n="nav_projects">Proyectos</a>
+                    <a href="#experiencia" class="hover:text-white transition-colors" data-i18n="nav_exp">Experiencia</a>
+                    <a href="#contacto" class="hover:text-white transition-colors" data-i18n="nav_contact">Contacto</a>
+                </div>
+
+                <!-- Language Selector (Visible en Desktop y Mobile) -->
+                <div class="relative group z-50">
+                    <button class="flex items-center gap-2 text-gray-300 hover:text-white transition-colors py-2">
+                        <span id="current-flag" class="text-xl">🇪🇸</span>
+                        <i class="ph ph-caret-down text-xs"></i>
+                    </button>
+                    <!-- Dropdown -->
+                    <div class="lang-dropdown absolute right-0 mt-0 pt-2 w-32 origin-top-right">
+                        <div class="bg-card border border-white/10 rounded-xl shadow-xl overflow-hidden backdrop-blur-md">
+                            <button onclick="changeLanguage('es')" class="flex items-center gap-3 w-full px-4 py-3 text-sm text-gray-400 hover:text-white hover:bg-white/5 text-left transition-colors">
+                                <span class="text-lg">🇪🇸</span> Español
+                            </button>
+                            <button onclick="changeLanguage('en')" class="flex items-center gap-3 w-full px-4 py-3 text-sm text-gray-400 hover:text-white hover:bg-white/5 text-left transition-colors">
+                                <span class="text-lg">🇺🇸</span> English
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button class="md:hidden text-gray-300 hover:text-white z-50" onclick="toggleMobileMenu()">
+                    <i class="ph ph-list text-2xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu"
+            class="hidden md:hidden bg-card border-b border-gray-800 absolute w-full left-0 top-full px-6 py-4 flex flex-col space-y-4 shadow-2xl">
+            <a href="#inicio" class="text-gray-400 hover:text-white" onclick="toggleMobileMenu()" data-i18n="nav_home">Inicio</a>
+            <a href="#proyectos" class="text-gray-400 hover:text-white" onclick="toggleMobileMenu()" data-i18n="nav_projects">Proyectos</a>
+            <a href="#experiencia" class="text-gray-400 hover:text-white" onclick="toggleMobileMenu()" data-i18n="nav_exp">Experiencia</a>
+            <a href="#contacto" class="text-gray-400 hover:text-white" onclick="toggleMobileMenu()" data-i18n="nav_contact">Contacto</a>
+        </div>
+    </nav>
+
+    <section id="inicio"
+        class="min-h-screen flex flex-col justify-center items-center px-6 pt-20 relative overflow-hidden">
+        <div
+            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-blue-600 rounded-full blur-[120px] opacity-20 pointer-events-none">
+        </div>
+
+        <div class="text-center max-w-3xl z-10 animate-fade-in-up">
+            <div
+                class="inline-flex items-center px-3 py-1 rounded-full border border-gray-800 bg-white/5 text-xs text-green-400 mb-6 backdrop-blur-sm select-none">
+                <span class="w-2 h-2 rounded-full bg-green-500 mr-2 animate-pulse"></span>
+                <span data-i18n="hero_available">Disponible para trabajar</span>
+            </div>
+
+            <h1 class="text-5xl md:text-7xl font-bold tracking-tight mb-6 bg-clip-text text-transparent bg-gradient-to-b from-white to-gray-500">
+                <span data-i18n="hero_title_1">Creando experiencias</span> <br /> 
+                <span data-i18n="hero_title_2">únicas</span>
+            </h1>
+
+            <p class="text-lg text-gray-400 mb-10 max-w-2xl mx-auto leading-relaxed" data-i18n="hero_intro">
+                Hola, soy <span class="text-white font-semibold">Cristian López Kostiouk</span>. Un desarrollador Full
+                Stack apasionado por construir software accesible, funcional y estéticamente atractivo.
+            </p>
+
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#proyectos"
+                    class="px-8 py-3 bg-white text-black font-semibold rounded-full hover:bg-gray-200 transition-all transform hover:scale-105 flex items-center justify-center gap-2">
+                    <span data-i18n="hero_btn_projects">Ver Proyectos</span> <i class="ph ph-arrow-right"></i>
+                </a>
+                <a href="#contacto"
+                    class="px-8 py-3 bg-white/5 border border-white/10 text-white font-semibold rounded-full hover:bg-white/10 transition-all flex items-center justify-center gap-2">
+                    <i class="ph ph-envelope"></i> <span data-i18n="hero_btn_contact">Contactar</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Scroll Down Indicator -->
+        <div class="absolute bottom-10 animate-bounce text-gray-500">
+            <i class="ph ph-caret-down text-2xl"></i>
+        </div>
+    </section>
+
+    <!-- Skills / Tech Stack Section -->
+    <section class="py-10 border-y border-white/5 bg-white/[0.02]">
+        <div class="max-w-5xl mx-auto px-6">
+            <p class="text-center text-sm text-gray-500 mb-8 uppercase tracking-widest" data-i18n="stack_title">Stack Tecnológico</p>
+            <div
+                class="flex flex-wrap justify-center gap-8 md:gap-16 opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
+                <div class="flex flex-col items-center gap-2 hover:text-white transition-colors"><i
+                        class="ph ph-code text-3xl"></i><span class="text-xs">React</span></div>
+                <div class="flex flex-col items-center gap-2 hover:text-white transition-colors"><i
+                        class="ph ph-file-js text-3xl"></i><span class="text-xs">JavaScript</span></div>
+                <div class="flex flex-col items-center gap-2 hover:text-white transition-colors"><i
+                        class="ph ph-file-sql text-3xl"></i><span class="text-xs">SQL</span></div>
+                <div class="flex flex-col items-center gap-2 hover:text-white transition-colors"><i
+                        class="ph ph-git-branch text-3xl"></i><span class="text-xs">Git</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="proyectos" class="py-24 px-6">
+        <div class="max-w-5xl mx-auto">
+            <h2 class="text-3xl md:text-4xl font-bold mb-16 reveal" data-i18n="projects_title">Proyectos Destacados</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+                <!-- Project Card 1: UnGenius -->
+                <article
+                    class="group relative bg-card rounded-2xl overflow-hidden border border-white/10 hover:border-white/20 transition-all duration-300 reveal project-card">
+                    <div class="h-64 bg-gray-800 overflow-hidden relative">
+                        <div>
+                            <img src="/images/ungenius-page.png" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgZmlsbD0iIzIyMiI+PHJlY3Qgd2lkdGg9IjEwMCIgaGVpZ2h0PSIxMDAiLz48dGV4dCB4PSI1MCIgeT0iNTAiIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiM1NTUiIGZvbnQtc2l6ZT0iMjAiPlByb3llY3RvPC90ZXh0Pjwvc3ZnPg=='" alt="UnGenius Project Screenshot"
+                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <h3 class="text-xl font-bold text-white mb-2">UnGenius</h3>
+                                <p class="text-gray-400 text-sm line-clamp-3"
+                                    data-i18n="project_ungenius_desc">
+                                    Un e-commerce innovador para la gestión de productos digitales enfocados a los
+                                    videojuegos, y con recompensas por compras.</p>
+                            </div>
+                            <a target="_blank" style="width: 60px;height: 38px;margin-right: 8px;"
+                                href="https://www.ungenius.pro"
+                                class="p-2 bg-white/5 rounded-full hover:bg-white/10 hover:text-blue-400 transition-colors flex justify-center items-center">
+                                <i class="ph ph-arrow-up-right text-xl"></i>
+                            </a>
+                            <a target="_blank" style="width: 60px;height: 38px;" href="#"
+                                class="p-2 bg-white/5 rounded-full hover:bg-white/10 hover:text-blue-400 transition-colors disabled flex justify-center items-center">
+                                <i class="ph ph-github-logo text-xl"></i>
+                            </a>
+                        </div>
+                        <div class="flex gap-2 flex-wrap mt-4">
+                            <span
+                                class="px-3 py-1 text-xs rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20">React</span>
+                            <span
+                                class="px-3 py-1 text-xs rounded-full bg-green-500/10 text-green-400 border border-green-500/20">Supabase</span>
+                            <span
+                                class="px-3 py-1 text-xs rounded-full bg-gray-500/10 text-gray-400 border border-gray-500/20">Stripe</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Project Card 2: SnapUI -->
+                <article
+                    class="group relative bg-card rounded-2xl overflow-hidden border border-white/10 hover:border-white/20 transition-all duration-300 reveal project-card">
+                    <div class="h-64 bg-gray-800 overflow-hidden relative">
+                        <div
+                            class="w-full h-full bg-gradient-to-br from-indigo-900 to-purple-900 group-hover:scale-105 transition-transform duration-500 flex items-center justify-center">
+                            <i class="ph ph-laptop text-6xl text-white/20"></i>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <h3 class="text-xl font-bold text-white mb-2">SnapUI</h3>
+                                <p class="text-gray-400 text-sm line-clamp-3"
+                                    data-i18n="project_snapui_desc">
+                                    Un repositorio web de componentes UI</p>
+                            </div>
+                            <div class="flex">
+                                <a target="_blank" style="width:38px; height: 38px; margin-right: 8px;"
+                                    class="p-2 bg-white/5 rounded-full hover:bg-white/10 hover:text-blue-400 transition-colors disabled flex justify-center items-center">
+                                    <i class="ph ph-arrow-up-right text-xl"></i>
+                                </a>
+                                <a target="_blank" style="width:38px; height: 38px;" href="https://github.com/iDorrD/SnapUI"
+                                    class="p-2 bg-white/5 rounded-full hover:bg-white/10 hover:text-blue-400 transition-colors flex justify-center items-center">
+                                    <i class="ph ph-github-logo text-xl"></i>
+                                </a>
+                            </div>
+
+                        </div>
+                        <div class="flex gap-2 flex-wrap mt-4">
+                            <span
+                                class="px-3 py-1 text-xs rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20">React</span>
+                            <span
+                                class="px-3 py-1 text-xs rounded-full bg-pink-500/10 text-pink-400 border border-pink-500/20">Laravel</span>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experiencia" class="py-24 px-6 bg-white/[0.02]">
+        <div class="max-w-3xl mx-auto">
+            <h2 class="text-3xl md:text-4xl font-bold mb-12 reveal" data-i18n="exp_title">Experiencia</h2>
+
+            <div class="relative border-l border-white/10 ml-3 space-y-12">
+
+                <!-- Job 2 -->
+                <div class="relative pl-8 reveal">
+                    <span
+                        class="absolute -left-[5px] top-2 w-2.5 h-2.5 rounded-full bg-gray-600 ring-4 ring-black"></span>
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
+                        <h3 class="text-xl font-bold text-white">Wordpress & SEO</h3>
+                        <span class="text-sm text-gray-500 font-mono" data-i18n="job_2_date">Abril 2025 - Junio 2025</span>
+                    </div>
+                    <p class="text-blue-400 text-sm mb-4">PlanB Ecommerce</p>
+                    <p class="text-gray-400 leading-relaxed" data-i18n="job_2_desc">
+                        Desarrollo y optimización de sitios web en Wordpress y Woocommerce. Implementación de estrategias SEO para
+                        mejorar la visibilidad y el tráfico orgánico.
+                    </p>
+                </div>
+
+                <!-- Job 3 -->
+                <div class="relative pl-8 reveal">
+                    <span
+                        class="absolute -left-[5px] top-2 w-2.5 h-2.5 rounded-full bg-gray-600 ring-4 ring-black"></span>
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
+                        <h3 class="text-xl font-bold text-white" data-i18n="job_3_title">Técnico de sistemas operativos</h3>
+                        <span class="text-sm text-gray-500 font-mono" data-i18n="job_3_date">Mayo 2023 - Junio 2023</span>
+                    </div>
+                    <p class="text-blue-400 text-sm mb-4">Ayuntamiento de Grado</p>
+                    <p class="text-gray-400 leading-relaxed" data-i18n="job_3_desc">
+                        Mantenimiento y soporte técnico de sistemas operativos Windows. Gestión de redes y
+                        resolución de incidencias técnicas.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contacto" class="py-32 px-6">
+        <div class="max-w-2xl mx-auto text-center reveal">
+            <h2 class="text-3xl md:text-5xl font-bold mb-6" data-i18n="contact_title">¿Tienes un proyecto en mente?</h2>
+            <p class="text-gray-400 text-lg mb-10" data-i18n="contact_text">
+                Actualmente estoy disponible para nuevos retos. Si tienes alguna pregunta o simplemente quieres saludar,
+                mi bandeja de entrada está abierta.
+            </p>
+
+            <a href="mailto:lk.cristian02@gmail.com"
+                class="inline-flex items-center gap-3 px-8 py-4 bg-white text-black font-bold rounded-full hover:bg-gray-200 transition-all transform hover:-translate-y-1 select-none">
+                <i class="ph ph-paper-plane-tilt text-xl"></i>
+                <span data-i18n="contact_btn">Envíame un correo</span>
+            </a>
+
+            <div class="mt-16 flex justify-center gap-6">
+                <a href="https://github.com/iDorrD" class="text-gray-400 hover:text-white transition-colors text-2xl"><i
+                        class="ph ph-github-logo"></i></a>
+                <a href="https://www.linkedin.com/in/cristianl%C3%B3pezkostiouk/"
+                    class="text-gray-400 hover:text-white transition-colors text-2xl"><i
+                        class="ph ph-linkedin-logo"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 border-t border-white/10 text-center text-sm text-gray-600">
+        <p data-i18n="footer_text">&copy; 2025 Cristian López Kostiouk. Construido con 💗</p>
+    </footer>
+
+    <!-- JavaScript para animaciones e interacciones + TRADUCCIONES -->
+    <script>
+        // === SISTEMA DE TRADUCCIONES ===
+        const translations = {
+            es: {
+                nav_home: "Inicio",
+                nav_projects: "Proyectos",
+                nav_exp: "Experiencia",
+                nav_contact: "Contacto",
+                hero_available: "Disponible para trabajar",
+                hero_title_1: "Creando experiencias",
+                hero_title_2: "únicas",
+                hero_intro: "Hola, soy <span class='text-white font-semibold'>Cristian López Kostiouk</span>. Un desarrollador Full Stack apasionado por construir software accesible, funcional y estéticamente atractivo.",
+                hero_btn_projects: "Ver Proyectos",
+                hero_btn_contact: "Contactar",
+                stack_title: "Stack Tecnológico",
+                projects_title: "Proyectos Destacados",
+                project_ungenius_desc: "Un e-commerce innovador para la gestión de productos digitales enfocados a los videojuegos, y con recompensas por compras.",
+                project_snapui_desc: "Un repositorio web de componentes UI",
+                exp_title: "Experiencia",
+                job_2_date: "Abril 2025 - Junio 2025",
+                job_2_desc: "Desarrollo y optimización de sitios web en Wordpress y Woocommerce. Implementación de estrategias SEO para mejorar la visibilidad y el tráfico orgánico.",
+                job_3_title: "Técnico de sistemas operativos",
+                job_3_date: "Mayo 2023 - Junio 2023",
+                job_3_desc: "Mantenimiento y soporte técnico de sistemas operativos Windows. Gestión de redes y resolución de incidencias técnicas.",
+                contact_title: "¿Tienes un proyecto en mente?",
+                contact_text: "Actualmente estoy disponible para nuevos retos. Si tienes alguna pregunta o simplemente quieres saludar, mi bandeja de entrada está abierta.",
+                contact_btn: "Envíame un correo",
+                footer_text: "&copy; 2025 Cristian López Kostiouk. Construido con 💗"
+            },
+            en: {
+                nav_home: "Home",
+                nav_projects: "Projects",
+                nav_exp: "Experience",
+                nav_contact: "Contact",
+                hero_available: "Available for work",
+                hero_title_1: "Creating unique",
+                hero_title_2: "digital experiences",
+                hero_intro: "Hi, I'm <span class='text-white font-semibold'>Cristian López Kostiouk</span>. A Full Stack developer passionate about building accessible, functional, and aesthetically pleasing software.",
+                hero_btn_projects: "View Projects",
+                hero_btn_contact: "Contact Me",
+                stack_title: "Tech Stack",
+                projects_title: "Featured Projects",
+                project_ungenius_desc: "An innovative e-commerce for managing digital products focused on video games, with rewards for purchases.",
+                project_snapui_desc: "A web repository of UI components.",
+                exp_title: "Experience",
+                job_2_date: "April 2025 - June 2025",
+                job_2_desc: "Development and optimization of websites in Wordpress and Woocommerce. Implementation of SEO strategies to improve visibility and organic traffic.",
+                job_3_title: "Operating Systems Technician",
+                job_3_date: "May 2023 - June 2023",
+                job_3_desc: "Maintenance and technical support of Windows operating systems. Network management and resolution of technical incidents.",
+                contact_title: "Have a project in mind?",
+                contact_text: "I am currently available for new challenges. If you have any questions or just want to say hello, my inbox is open.",
+                contact_btn: "Send me an email",
+                footer_text: "&copy; 2025 Cristian López Kostiouk. Built with 💗"
+            }
+        };
+
+        function changeLanguage(lang) {
+            // Guardar preferencia
+            localStorage.setItem('portfolio_lang', lang);
+            
+            // Actualizar textos
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (translations[lang][key]) {
+                    // Usar innerHTML para permitir etiquetas como <span class="..."> o <br>
+                    element.innerHTML = translations[lang][key];
+                }
+            });
+
+            // Actualizar bandera del botón
+            const flagElement = document.getElementById('current-flag');
+            flagElement.textContent = lang === 'es' ? '🇪🇸' : '🇺🇸';
+
+            // Actualizar atributo lang del html
+            document.documentElement.lang = lang;
+        }
+
+        // Cargar idioma preferido al iniciar
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedLang = localStorage.getItem('portfolio_lang') || 'es';
+            changeLanguage(savedLang);
+        });
+
+
+        // === ANIMACIONES Y UX ===
+
+        // 1. Navbar Glass Effect dinámico
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 20) {
+                navbar.classList.add('shadow-lg');
+                navbar.classList.replace('bg-opacity-0', 'glass-nav'); 
+            } else {
+                navbar.classList.remove('shadow-lg');
+            }
+        });
+
+        // 2. Menú Móvil
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // 3. Animación de Scroll (Intersection Observer)
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => {
+            observer.observe(el);
+        });
+
+        // 4. Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    const headerOffset = 80;
+                    const elementPosition = targetElement.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: "smooth"
+                    });
+                    document.getElementById('mobile-menu').classList.add('hidden');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
