@@ -139,6 +139,7 @@
                     <a href="#proyectos" class="hover:text-white transition-colors" data-i18n="nav_projects">Proyectos</a>
                     <a href="#experiencia" class="hover:text-white transition-colors" data-i18n="nav_exp">Experiencia</a>
                     <a href="#contacto" class="hover:text-white transition-colors" data-i18n="nav_contact">Contacto</a>
+                    <button onclick="downloadCV()" class="hover:text-white transition-colors flex items-center gap-2" data-i18n="nav_cv">Descargar CV</button>
                 </div>
 
                 <!-- Language Selector (Visible en Desktop y Mobile) -->
@@ -174,6 +175,7 @@
             <a href="#proyectos" class="text-gray-400 hover:text-white" onclick="toggleMobileMenu()" data-i18n="nav_projects">Proyectos</a>
             <a href="#experiencia" class="text-gray-400 hover:text-white" onclick="toggleMobileMenu()" data-i18n="nav_exp">Experiencia</a>
             <a href="#contacto" class="text-gray-400 hover:text-white" onclick="toggleMobileMenu()" data-i18n="nav_contact">Contacto</a>
+            <button onclick="toggleMobileMenu(); downloadCV()" class="text-gray-400 hover:text-white text-left" data-i18n="nav_cv">Descargar CV</button>
         </div>
     </nav>
 
@@ -209,6 +211,10 @@
                     class="px-8 py-3 bg-white/5 border border-white/10 text-white font-semibold rounded-full hover:bg-white/10 transition-all flex items-center justify-center gap-2">
                     <i class="ph ph-envelope"></i> <span data-i18n="hero_btn_contact">Contactar</span>
                 </a>
+                <button onclick="downloadCV()"
+                    class="px-8 py-3 bg-white/5 border border-white/10 text-white font-semibold rounded-full hover:bg-white/10 transition-all flex items-center justify-center gap-2">
+                    <i class="ph ph-download"></i> <span data-i18n="hero_btn_cv">Descargar CV</span>
+                </button>
             </div>
         </div>
 
@@ -319,6 +325,54 @@
                         </div>
                     </div>
                 </article>
+
+                <!-- Project Card 3: PaintFlow -->
+                <article
+                    class="group relative bg-card rounded-2xl overflow-hidden border border-white/10 hover:border-white/20 transition-all duration-300 reveal project-card">
+                    <div class="h-64 bg-gray-800 overflow-hidden relative">
+                        <div
+                            class="w-full h-full bg-gradient-to-br from-orange-700 to-orange-500 group-hover:scale-105 transition-transform duration-500 flex items-center justify-center">
+                            <i class="ph ph-paint-brush text-6xl text-white/20"></i>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <div class="flex items-center gap-2 mb-2">
+                                    <h3 class="text-xl font-bold text-white">PaintFlow</h3>
+                                    <span class="px-2 py-1 text-xs rounded-full bg-yellow-500/10 text-yellow-400 border border-yellow-500/20" data-i18n="project_paintflow_in_dev">In development</span>
+                                </div>
+                                <p class="text-gray-400 text-sm line-clamp-3"
+                                    data-i18n="project_paintflow_desc">
+                                    Un página web que simula un editor de imágenes y pintura, similar a Adobe Photoshop.</p>
+                            </div>
+                            <div class="flex">
+                                <a target="_blank" style="width:38px; height: 38px; margin-right: 8px;"
+                                    class="p-2 bg-white/5 rounded-full hover:bg-white/10 hover:text-blue-400 transition-colors disabled flex justify-center items-center">
+                                    <i class="ph ph-arrow-up-right text-xl"></i>
+                                </a>
+                                <a target="_blank" style="width:38px; height: 38px;"
+                                    class="p-2 bg-white/5 rounded-full hover:bg-white/10 hover:text-blue-400 transition-colors disabled flex justify-center items-center">
+                                    <i class="ph ph-github-logo text-xl"></i>
+                                </a>
+                            </div>
+
+                        </div>
+                        <div class="mb-4">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-xs text-gray-400" data-i18n="project_paintflow_progress">Progreso</span>
+                                <span class="text-xs text-gray-400 font-semibold">80%</span>
+                            </div>
+                            <div class="w-full bg-gray-700 rounded-full h-2 overflow-hidden">
+                                <div class="bg-gradient-to-r from-yellow-500 to-orange-500 h-full rounded-full" style="width: 80%"></div>
+                            </div>
+                        </div>
+                        <div class="flex gap-2 flex-wrap mt-4">
+                            <span
+                                class="px-3 py-1 text-xs rounded-full bg-orange-500/10 text-orange-400 border border-orange-500/20">HTML & CSS</span>
+                        </div>
+                    </div>
+                </article>
             </div>
         </div>
     </section>
@@ -336,7 +390,7 @@
                         class="absolute -left-[5px] top-2 w-2.5 h-2.5 rounded-full bg-gray-600 ring-4 ring-black"></span>
                     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
                         <h3 class="text-xl font-bold text-white">Wordpress & SEO</h3>
-                        <span class="text-sm text-gray-500 font-mono" data-i18n="job_2_date">Abril 2025 - Junio 2025</span>
+                        <span class="text-sm text-gray-500 font-mono" data-i18n="job_2_date">2025</span>
                     </div>
                     <p class="text-blue-400 text-sm mb-4">PlanB Ecommerce</p>
                     <p class="text-gray-400 leading-relaxed" data-i18n="job_2_desc">
@@ -351,7 +405,7 @@
                         class="absolute -left-[5px] top-2 w-2.5 h-2.5 rounded-full bg-gray-600 ring-4 ring-black"></span>
                     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
                         <h3 class="text-xl font-bold text-white" data-i18n="job_3_title">Técnico de sistemas operativos</h3>
-                        <span class="text-sm text-gray-500 font-mono" data-i18n="job_3_date">Mayo 2023 - Junio 2023</span>
+                        <span class="text-sm text-gray-500 font-mono" data-i18n="job_3_date">2023</span>
                     </div>
                     <p class="text-blue-400 text-sm mb-4">Ayuntamiento de Grado</p>
                     <p class="text-gray-400 leading-relaxed" data-i18n="job_3_desc">
@@ -390,7 +444,7 @@
 
     <!-- Footer -->
     <footer class="py-8 border-t border-white/10 text-center text-sm text-gray-600">
-        <p data-i18n="footer_text">&copy; 2025 Cristian López Kostiouk. Construido con 💗</p>
+        <p data-i18n="footer_text">&copy; 2026 Cristian López Kostiouk. Construido con 💗</p>
     </footer>
 
     <!-- JavaScript para animaciones e interacciones + TRADUCCIONES -->
@@ -402,21 +456,26 @@
                 nav_projects: "Proyectos",
                 nav_exp: "Experiencia",
                 nav_contact: "Contacto",
+                nav_cv: "Descargar CV",
                 hero_available: "Disponible para trabajar",
                 hero_title_1: "Creando experiencias",
                 hero_title_2: "únicas",
                 hero_intro: "Hola, soy <span class='text-white font-semibold'>Cristian López Kostiouk</span>. Un desarrollador Full Stack apasionado por construir software accesible, funcional y estéticamente atractivo.",
                 hero_btn_projects: "Ver Proyectos",
                 hero_btn_contact: "Contactar",
+                hero_btn_cv: "Descargar CV",
                 stack_title: "Stack Tecnológico",
                 projects_title: "Proyectos Destacados",
                 project_ungenius_desc: "Un e-commerce innovador para la gestión de productos digitales enfocados a los videojuegos, y con recompensas por compras.",
                 project_snapui_desc: "Un repositorio web de componentes UI",
+                project_paintflow_desc: "Un página web que simula un editor de imágenes y pintura, similar a Adobe Photoshop.",
+                project_paintflow_in_dev: "En desarrollo",
+                project_paintflow_progress: "Progreso",
                 exp_title: "Experiencia",
-                job_2_date: "Abril 2025 - Junio 2025",
+                job_2_date: "2025",
                 job_2_desc: "Desarrollo y optimización de sitios web en Wordpress y Woocommerce. Implementación de estrategias SEO para mejorar la visibilidad y el tráfico orgánico.",
                 job_3_title: "Técnico de sistemas operativos",
-                job_3_date: "Mayo 2023 - Junio 2023",
+                job_3_date: "2023",
                 job_3_desc: "Mantenimiento y soporte técnico de sistemas operativos Windows. Gestión de redes y resolución de incidencias técnicas.",
                 contact_title: "¿Tienes un proyecto en mente?",
                 contact_text: "Actualmente estoy disponible para nuevos retos. Si tienes alguna pregunta o simplemente quieres saludar, mi bandeja de entrada está abierta.",
@@ -428,21 +487,26 @@
                 nav_projects: "Projects",
                 nav_exp: "Experience",
                 nav_contact: "Contact",
+                nav_cv: "Download CV",
                 hero_available: "Available for work",
                 hero_title_1: "Creating unique",
                 hero_title_2: "digital experiences",
                 hero_intro: "Hi, I'm <span class='text-white font-semibold'>Cristian López Kostiouk</span>. A Full Stack developer passionate about building accessible, functional, and aesthetically pleasing software.",
                 hero_btn_projects: "View Projects",
                 hero_btn_contact: "Contact Me",
+                hero_btn_cv: "Download CV",
                 stack_title: "Tech Stack",
                 projects_title: "Featured Projects",
                 project_ungenius_desc: "An innovative e-commerce for managing digital products focused on video games, with rewards for purchases.",
                 project_snapui_desc: "A web repository of UI components.",
+                project_paintflow_desc: "A web page that simulates an image and painting editor, similar to Adobe Photoshop.",
+                project_paintflow_in_dev: "In development",
+                project_paintflow_progress: "Progress",
                 exp_title: "Experience",
-                job_2_date: "April 2025 - June 2025",
+                job_2_date: "2025",
                 job_2_desc: "Development and optimization of websites in Wordpress and Woocommerce. Implementation of SEO strategies to improve visibility and organic traffic.",
                 job_3_title: "Operating Systems Technician",
-                job_3_date: "May 2023 - June 2023",
+                job_3_date: "2023",
                 job_3_desc: "Maintenance and technical support of Windows operating systems. Network management and resolution of technical incidents.",
                 contact_title: "Have a project in mind?",
                 contact_text: "I am currently available for new challenges. If you have any questions or just want to say hello, my inbox is open.",
@@ -517,7 +581,20 @@
             observer.observe(el);
         });
 
-        // 4. Smooth Scroll
+        // 4. Función para descargar CV
+        function downloadCV() {
+            // Reemplaza con la ruta correcta de tu archivo CV
+            const cvPath = '/CV_CristianLópezKostiouk.pdf';
+            const link = document.createElement('a');
+            link.href = cvPath;
+            link.download = 'CV_CristianLópezKostiouk.pdf';
+            link.style.display = 'none';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // 5. Smooth Scroll
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
