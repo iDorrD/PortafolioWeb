@@ -1,0 +1,90 @@
+{
+  "projects": [
+    {
+      "id": 1,
+      "name": "UnGenius",
+      "descriptions": {
+        "es": "Un e-commerce innovador para la gestión de productos digitales enfocados a los videojuegos, y con recompensas por compras.",
+        "en": "An innovative e-commerce for managing digital products focused on video games, with rewards for purchases."
+      },
+      "technologies": ["React", "Supabase", "Stripe"],
+      "links": {
+        "live": "https://www.ungenius.pro",
+        "github": ""
+      },
+      "status": "completed",
+      "progress": 100,
+      "image": "/images/ungenius-page.png",
+      "badge": null
+    },
+    {
+      "id": 2,
+      "name": "SnapUI",
+      "descriptions": {
+        "es": "Un repositorio web de componentes UI",
+        "en": "A web repository of UI components."
+      },
+      "technologies": ["React", "Laravel"],
+      "links": {
+        "live": "",
+        "github": "https://github.com/iDorrD/SnapUI"
+      },
+      "status": "completed",
+      "progress": 100,
+      "image": null,
+      "gradient": "from-indigo-900 to-purple-900",
+      "icon": "ph-laptop",
+      "badge": null
+    },
+    {
+      "id": 3,
+      "name": "PaintFlow",
+      "descriptions": {
+        "es": "Un página web que simula un editor de imágenes y pintura, similar a Adobe Photoshop.",
+        "en": "A web page that simulates an image and painting editor, similar to Adobe Photoshop."
+      },
+      "technologies": ["HTML & CSS"],
+      "links": {
+        "live": "",
+        "github": ""
+      },
+      "status": "in-development",
+      "progress": 80,
+      "image": null,
+      "gradient": "from-orange-700 to-orange-500",
+      "icon": "ph-paint-brush",
+      "badge": {
+        "label": {
+          "es": "En desarrollo",
+          "en": "In development"
+        },
+        "color": "yellow"
+      }
+    },
+    {
+      "id": 4,
+      "name": "Spacebar Timing",
+      "descriptions": {
+        "es": "Un juego web que pone a prueba tu habilidad para presionar la barra espaciadora en el momento justo.",
+        "en": "A web game that tests your skill in pressing the spacebar at the right moment."
+      },
+      "technologies": [],
+      "links": {
+        "live": "",
+        "github": ""
+      },
+      "status": "in-development",
+      "progress": 5,
+      "image": null,
+      "gradient": "from-red-800 to-red-700",
+      "icon": "ph-game-controller",
+      "badge": {
+        "label": {
+          "es": "En desarrollo",
+          "en": "In development"
+        },
+        "color": "yellow"
+      }
+    }
+  ]
+}
