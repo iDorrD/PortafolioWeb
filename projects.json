@@ -2,6 +2,25 @@
   "projects": [
     {
       "id": 1,
+      "name": "Talkra",
+      "descriptions": {
+        "es": "Una plataforma de chat en tiempo real para conectar a personas, con sistema de llamadas y mensajerías instantáneas.",
+        "en": "A real-time chat platform to connect people, with a system of calls and instant messaging."
+      },
+      "technologies": ["React", "Supabase", "Stripe"],
+      "links": {
+        "live": "https://talkra.app",
+        "github": ""
+      },
+      "status": "completed",
+      "gradient": "from-green-900 to-green-700",
+      "icon": "ph-laptop",
+      "progress": 19,
+      "image": null,
+      "badge": null
+    },
+    {
+      "id": 2,
       "name": "UnGenius",
       "descriptions": {
         "es": "Un e-commerce innovador para la gestión de productos digitales enfocados a los videojuegos, y con recompensas por compras.",
@@ -9,7 +28,7 @@
       },
       "technologies": ["React", "Supabase", "Stripe"],
       "links": {
-        "live": "https://www.ungenius.pro",
+        "live": "",
         "github": ""
       },
       "status": "completed",
@@ -18,7 +37,7 @@
       "badge": null
     },
     {
-      "id": 2,
+      "id": 3,
       "name": "SnapUI",
       "descriptions": {
         "es": "Un repositorio web de componentes UI",
@@ -35,56 +54,6 @@
       "gradient": "from-indigo-900 to-purple-900",
       "icon": "ph-laptop",
       "badge": null
-    },
-    {
-      "id": 3,
-      "name": "PaintFlow",
-      "descriptions": {
-        "es": "Un página web que simula un editor de imágenes y pintura, similar a Adobe Photoshop.",
-        "en": "A web page that simulates an image and painting editor, similar to Adobe Photoshop."
-      },
-      "technologies": ["HTML & CSS"],
-      "links": {
-        "live": "",
-        "github": ""
-      },
-      "status": "in-development",
-      "progress": 80,
-      "image": null,
-      "gradient": "from-orange-700 to-orange-500",
-      "icon": "ph-paint-brush",
-      "badge": {
-        "label": {
-          "es": "En desarrollo",
-          "en": "In development"
-        },
-        "color": "yellow"
-      }
-    },
-    {
-      "id": 4,
-      "name": "Spacebar Timing",
-      "descriptions": {
-        "es": "Un juego web que pone a prueba tu habilidad para presionar la barra espaciadora en el momento justo.",
-        "en": "A web game that tests your skill in pressing the spacebar at the right moment."
-      },
-      "technologies": [],
-      "links": {
-        "live": "",
-        "github": ""
-      },
-      "status": "in-development",
-      "progress": 5,
-      "image": null,
-      "gradient": "from-red-800 to-red-700",
-      "icon": "ph-game-controller",
-      "badge": {
-        "label": {
-          "es": "En desarrollo",
-          "en": "In development"
-        },
-        "color": "yellow"
-      }
     }
   ]
 }
