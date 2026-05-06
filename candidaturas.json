@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "empresa": "Ygeria",
+    "dondeFueSendado": "InfoJobs",
+    "fecha": "6/5/2026",
+    "estado": "pendiente",
+    "descarga": "/descargas/cv-ygeria.pdf"
+  },
+  {
+    "id": 2,
+    "empresa": "Zetacom",
+    "dondeFueSendado": "InfoJobs",
+    "fecha": "6/5/2026",
+    "estado": "pendiente",
+    "descarga": "/descargas/cv-zetacom.pdf"
+  }
+]

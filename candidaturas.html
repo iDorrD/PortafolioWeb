@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Candidaturas - Cristian López Kostiouk | Desarrollador Web Junior</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        dark: '#0a0a0a',
+                        card: '#171717',
+                        accent: '#3b82f6'
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #0a0a0a;
+            color: #e5e5e5;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .bg-noise {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0a0a0a;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        .glass-nav {
+            background: rgba(10, 10, 10, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .project-card:hover .card-overlay {
+            opacity: 1;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .disabled {
+            pointer-events: none;
+            opacity: 0.5;
+        }
+        
+        /* Estilos para el dropdown de idioma */
+        .lang-dropdown {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.2s ease-in-out;
+        }
+        
+        .group:hover .lang-dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        /* Estilos para candidaturas */
+        .candidatura-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.75rem;
+            background: rgba(23, 23, 23, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            margin-bottom: 1rem;
+            user-select: none;
+        }
+
+        .candidatura-item:hover {
+            background: rgba(255, 255, 255, 0.079);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .candidatura-info {
+            flex: 1;
+        }
+
+        .candidatura-empresa {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+        }
+
+        .candidatura-detalles {
+            font-size: 0.8rem;
+            color: #9ca3af;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .candidatura-acciones {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .estado-badge {
+            padding: 0.25rem 0.85rem;
+            border-radius: 24px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            text-transform: capitalize;
+            user-select: none;
+        }
+
+        .estado-pendiente {
+            background: #fbbf24;
+            color: #000000;
+        }
+
+        .estado-aprobado {
+            background: #22c55e;
+            color: #ffffff;
+        }
+
+        .estado-rechazado {
+            background: #ef4444;
+            color: #ffffff;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .btn-descargar {
+            padding: 0.5rem 1.25rem;
+            background: #ffffff;
+            color: black;
+            border: none;
+            border-radius: 24px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            user-select: none;
+        }
+
+        .btn-descargar:hover {
+            background: #e4e4e4;
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .candidatura-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .candidatura-acciones {
+                width: 100%;
+                justify-content: space-between;
+                margin-top: 1rem;
+                padding-top: 1rem;
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+            }
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.75rem 1.25rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: #ffffff;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            margin-bottom: 1.5rem;
+        }
+
+        .search-input:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(59, 130, 246, 0.5);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .search-input::placeholder {
+            color: #6b7280;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-blue-500 selection:text-white">
+    <div class="bg-noise"></div>
+
+    <nav class="fixed w-full top-0 z-50 glass-nav transition-all duration-300" id="navbar">
+        <div class="max-w-5xl mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="/" class="text-xl font-bold tracking-tight hover:text-white transition-colors z-50">
+                Cristian López Kostiouk<span class="text-blue-500">.</span>
+            </a>
+
+            <!-- Contenedor Derecho: Menú Desktop + Selector Idioma + Hamburger -->
+            <div class="flex items-center gap-6">
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8 text-sm font-medium text-gray-400">
+                    <a href="#inicio" class="hover:text-white transition-colors" data-i18n="nav_home">Inicio</a>
+                    <a href="#proyectos" class="hover:text-white transition-colors" data-i18n="nav_projects">Proyectos</a>
+                    <a href="#experiencia" class="hover:text-white transition-colors" data-i18n="nav_exp">Experiencia</a>
+                    <a href="#contacto" class="hover:text-white transition-colors" data-i18n="nav_contact">Contacto</a>
+                    <button onclick="downloadCV()" class="hover:text-white transition-colors flex items-center gap-2" data-i18n="nav_cv">Descargar CV</button>
+                </div>
+
+                <!-- Language Selector (Visible en Desktop y Mobile) -->
+                <div class="relative group z-50">
+                    <button class="flex items-center gap-2 text-gray-300 hover:text-white transition-colors py-2">
+                        <span id="current-flag" class="text-xl">🇪🇸</span>
+                        <i class="ph ph-caret-down text-xs"></i>
+                    </button>
+                    <!-- Dropdown -->
+                    <div class="lang-dropdown absolute right-0 mt-0 pt-2 w-32 origin-top-right">
+                        <div class="bg-card border border-white/10 rounded-xl shadow-xl overflow-hidden backdrop-blur-md">
+                            <button onclick="changeLanguage('es')" class="flex items-center gap-3 w-full px-4 py-3 text-sm text-gray-400 hover:text-white hover:bg-white/5 text-left transition-colors">
+                                <span class="text-lg">🇪🇸</span> Español
+                            </button>
+                            <button onclick="changeLanguage('en')" class="flex items-center gap-3 w-full px-4 py-3 text-sm text-gray-400 hover:text-white hover:bg-white/5 text-left transition-colors">
+                                <span class="text-lg">🇺🇸</span> English
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button class="md:hidden text-gray-300 hover:text-white z-50" onclick="toggleMobileMenu()">
+                    <i class="ph ph-list text-2xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu"
+            class="hidden md:hidden bg-card border-b border-gray-800 absolute w-full left-0 top-full px-6 py-4 flex flex-col space-y-4 shadow-2xl">
+            <a href="#inicio" class="text-gray-400 hover:text-white" onclick="toggleMobileMenu()" data-i18n="nav_home">Inicio</a>
+            <a href="#proyectos" class="text-gray-400 hover:text-white" onclick="toggleMobileMenu()" data-i18n="nav_projects">Proyectos</a>
+            <a href="#experiencia" class="text-gray-400 hover:text-white" onclick="toggleMobileMenu()" data-i18n="nav_exp">Experiencia</a>
+            <a href="#contacto" class="text-gray-400 hover:text-white" onclick="toggleMobileMenu()" data-i18n="nav_contact">Contacto</a>
+            <button onclick="toggleMobileMenu(); downloadCV()" class="text-gray-400 hover:text-white text-left" data-i18n="nav_cv">Descargar CV</button>
+        </div>
+    </nav>
+
+    <section class="min-h-screen flex flex-col pt-32 px-6 pb-20" id="candidaturas">
+        <div class="text-center mb-12">
+            <h1 class="text-4xl md:text-6xl font-bold tracking-tight mb-6 bg-clip-text text-transparent bg-gradient-to-b from-white to-gray-500">
+                Candidaturas
+            </h1>
+            <p class="text-lg text-gray-400 mb-8 max-w-xl mx-auto" data-i18n="candidaturas_desc">
+                Aquí encontrarás las oportunidades laborales a las que he aplicado recientemente, junto con el estado de cada candidatura y un botón para descargar mi CV por cada oferta aplicada.
+            </p>
+        </div>
+        <!-- Lista de Candidaturas -->
+        <div class="max-w-4xl mx-auto w-full" id="candidaturasContainer">
+            <!-- Input de búsqueda -->
+            <input 
+                type="text" 
+                id="searchInput" 
+                class="search-input" 
+                placeholder="Buscar por empresa o plataforma..." 
+                data-i18n-placeholder="search_placeholder"
+            >
+            <!-- Las candidaturas se cargarán aquí con JavaScript -->
+            <div id="candidaturasList"></div>
+        </div>
+    </section>
+
+    <script>
+        let todasLasCandidaturas = [];
+
+        // Cargar candidaturas desde JSON
+        async function cargarCandidaturas() {
+            try {
+                const response = await fetch('/candidaturas.json');
+                todasLasCandidaturas = await response.json();
+                renderizarCandidaturas(todasLasCandidaturas);
+                
+                // Agregar listener al input de búsqueda
+                document.getElementById('searchInput').addEventListener('input', (e) => {
+                    const filtro = e.target.value.toLowerCase();
+                    const candidaturasFiltradas = todasLasCandidaturas.filter(candidatura => 
+                        candidatura.empresa.toLowerCase().includes(filtro) ||
+                        candidatura.dondeFueSendado.toLowerCase().includes(filtro)
+                    );
+                    renderizarCandidaturas(candidaturasFiltradas);
+                });
+            } catch (error) {
+                console.error('Error cargando candidaturas:', error);
+                document.getElementById('candidaturasList').innerHTML = 
+                    '<p class="text-red-400">Error al cargar las candidaturas</p>';
+            }
+        }
+
+        function renderizarCandidaturas(candidaturas) {
+            const container = document.getElementById('candidaturasList');
+            
+            if (candidaturas.length === 0) {
+                container.innerHTML = '<p class="text-gray-400 text-center py-8">No se encontraron candidaturas</p>';
+                return;
+            }
+
+            container.innerHTML = candidaturas.map(candidatura => `
+                <div class="candidatura-item">
+                    <div class="candidatura-info">
+                        <div class="candidatura-empresa">${candidatura.empresa}</div>
+                        <div class="candidatura-detalles">
+                            <span>${candidatura.dondeFueSendado}</span>
+                            <span>${candidatura.fecha}</span>
+                        </div>
+                    </div>
+                    <div class="candidatura-acciones">
+                        <span class="estado-badge estado-${candidatura.estado}">
+                            ${candidatura.estado}
+                        </span>
+                        <a href="${candidatura.descarga}" download class="btn-descargar">
+                            <i class="ph ph-download"></i> Descargar CV
+                        </a>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Cargar candidaturas cuando el DOM esté listo
+        document.addEventListener('DOMContentLoaded', cargarCandidaturas);
+    </script>
+</body>
+</html>

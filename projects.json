@@ -7,7 +7,7 @@
         "es": "Una plataforma de chat en tiempo real para conectar a personas, con sistema de llamadas y mensajerías instantáneas.",
         "en": "A real-time chat platform to connect people, with a system of calls and instant messaging."
       },
-      "technologies": ["React", "Supabase", "Stripe"],
+      "technologies": ["React", "Supabase", "Stripe", "WebRTC"],
       "links": {
         "live": "https://talkra.app",
         "github": ""
